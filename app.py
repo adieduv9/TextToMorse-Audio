@@ -4,17 +4,19 @@ from utils.decrypt import morse_to_text
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
+
 @app.route('/convert', methods=['POST'])
 def convert():
     data = request.get_json()
-    
+
     if not data:
         return jsonify({'error': 'No data received'}), 400
-    
+
     input_text = data.get('text', '').strip()
     mode = data.get('mode', '')  # 'encode' or 'decode'
 
@@ -32,6 +34,7 @@ def convert():
         return jsonify({'error': error}), 400
 
     return jsonify({'result': result, 'mode': mode})
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
